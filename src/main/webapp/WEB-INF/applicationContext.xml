@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.hibernate.dialect.PostgreSQLDialect" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/tuto" />
+        <property name="username" value="postgres" />
+        <property name="password" value="postgres" />
+    </bean>
+    
+      <bean id="sessionFactory" class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.alpha.tuto.model"/>
+         <property name="mappingResources">
+            <list>
+                <value>com.alpha.tuto.model.Orders</value>
+                <value>com.alpha.tuto.model.Products</value>
+            </list>
+        </property>
+        <property  name="hibernateProperties">
+           <props>
+            <prop key="hbm2ddl.auto">create</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+        </props>
+        </property>
+    </bean>
+
+
+
+    <bean id="OrdersDao" class="com.alpha.tuto.dao.OrderDao">
+      <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="ProductDao" class="com.alpha.tuto.dao.ProductDao">
+      <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="ProductSerivce" class="com.alpha.tuto.service.ProductSerivce">
+      <property name="ProductDao" ref="ProductDao"/>
+    </bean>
+
+
+<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+  
+
+  
+    <tx:annotation-driven transaction-manager="transactionManager" />
+</beans>
