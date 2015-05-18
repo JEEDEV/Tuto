@@ -8,32 +8,40 @@ package com.alpha.tuto.service;
 import com.alpha.tuto.dao.IOrdersDao;
 import com.alpha.tuto.model.Orders;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author bilel
  */
-public class OrderSerive implements IOrderService{
+@Service
+@Transactional(readOnly = true)
+public class OrderService implements IOrderService {
     
     
     private IOrdersDao iOrdersDao; 
 
+    @Transactional(readOnly = true)
     @Override
     public List<Orders> find() {
        
-        return (List<Orders>) getiOrdersDao().find();
+        return getiOrdersDao().find();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void addOrder(Orders order) {
        getiOrdersDao().addOrder(order);
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void updateOrder(Orders order) {
        getiOrdersDao().updateOrder(order);
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void deleteOrder(Orders order) {
       getiOrdersDao().updateOrder(order);

@@ -6,6 +6,7 @@
 package com.alpha.tuto.dao;
 
 import com.alpha.tuto.model.Products;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.SessionFactory;
 
@@ -13,7 +14,8 @@ import org.hibernate.SessionFactory;
  *
  * @author bilel
  */
-public class ProductDao implements IProductsDao{
+public class ProductDao implements IProductsDao,Serializable {
+    private static final long serialVersionUID = 1L;
 
      private SessionFactory sessionFactory;
     @Override
