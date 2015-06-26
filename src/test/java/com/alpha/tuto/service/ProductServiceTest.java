@@ -99,4 +99,18 @@ public class ProductServiceTest {
 
     }
  
+     @Test
+    public void testAddOrder() {
+        logger.info("addOrder");
+        Products product = new Products();
+        product.setProductNo(4);
+        product.setName("Test");
+        product.setPrice(10.5f);
+        getProductService().addProduct(product);
+        logger.info("Product Added with sucess");
+        
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
+    
 }
