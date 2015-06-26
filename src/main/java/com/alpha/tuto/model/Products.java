@@ -6,7 +6,7 @@
 package com.alpha.tuto.model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -56,6 +56,14 @@ public class Products implements Serializable {
         this.productNo = productNo;
     }
 
+       public Products(Integer productNo,String name,float price) {
+        this.productNo = productNo;
+        this.name= name;
+        this.price=price;
+    }
+
+    
+    
     public Integer getProductNo() {
         return productNo;
     }

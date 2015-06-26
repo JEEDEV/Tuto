@@ -16,38 +16,23 @@
         <property name="password" value="postgres" />
     </bean>
     
-      <bean id="sessionFactory" class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
+      <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="com.alpha.tuto.model"/>
-         <property name="mappingResources">
-            <list>
-                <value>com.alpha.tuto.model.Orders</value>
-                <value>com.alpha.tuto.model.Products</value>
-            </list>
-        </property>
         <property  name="hibernateProperties">
            <props>
-            <prop key="hbm2ddl.auto">create</prop>
             <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
             <prop key="hibernate.show_sql">true</prop>
         </props>
         </property>
     </bean>
 
 
-
-    <bean id="OrdersDao" class="com.alpha.tuto.dao.OrderDao">
-      <property name="sessionFactory" ref="sessionFactory"/>
+    <bean id="ProductService" class="com.alpha.tuto.service.ProductService">
+        <property name="sessionFactory" ref="sessionFactory"></property> 
     </bean>
-    
-    <bean id="ProductDao" class="com.alpha.tuto.dao.ProductDao">
-      <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-    <bean id="ProductSerivce" class="com.alpha.tuto.service.ProductSerivce">
-      <property name="ProductDao" ref="ProductDao"/>
-    </bean>
-
+  
 
 <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"></property>

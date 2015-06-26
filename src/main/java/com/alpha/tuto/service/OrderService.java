@@ -5,9 +5,11 @@
  */
 package com.alpha.tuto.service;
 
-import com.alpha.tuto.dao.IOrdersDao;
+
 import com.alpha.tuto.model.Orders;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,50 +17,44 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author bilel
  */
-@Service
+@Service(value = "OrderService")
 @Transactional(readOnly = true)
 public class OrderService implements IOrderService {
+   private SessionFactory sessionFactory;
     
-    
-    private IOrdersDao iOrdersDao; 
-
-    @Transactional(readOnly = true)
+   @Transactional(readOnly = true)
     @Override
     public List<Orders> find() {
-       
-        return getiOrdersDao().find();
+        Query query = getSessionFactory().getCurrentSession().getNamedQuery("Orders.findAll");
+        return (List<Orders>) query.list();
     }
 
     @Transactional(readOnly = false)
     @Override
     public void addOrder(Orders order) {
-       getiOrdersDao().addOrder(order);
+        getSessionFactory().getCurrentSession().save(order);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void updateOrder(Orders order) {
-       getiOrdersDao().updateOrder(order);
+        getSessionFactory().getCurrentSession().update(order);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void deleteOrder(Orders order) {
-      getiOrdersDao().updateOrder(order);
+       getSessionFactory().getCurrentSession().delete(order);
     }
 
-    /**
-     * @return the iOrdersDao
-     */
-    public IOrdersDao getiOrdersDao() {
-        return iOrdersDao;
+ 
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
-    /**
-     * @param iOrdersDao the iOrdersDao to set
-     */
-    public void setiOrdersDao(IOrdersDao iOrdersDao) {
-        this.iOrdersDao = iOrdersDao;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
     
 }
