@@ -34,6 +34,12 @@
     </servlet>
     <!-- Map these files with JSF -->
    
+   
+    <welcome-file-list>
+        <welcome-file>/index.jsf</welcome-file>
+    </welcome-file-list>
+
+   
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -41,14 +47,8 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
+         <url-pattern>*.xhtml</url-pattern>
+         <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.faces</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-    
+   
 </web-app>
