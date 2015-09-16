@@ -32,7 +32,7 @@ public class ProductServiceTest {
 
     private static ClassPathXmlApplicationContext context;
     @Autowired
-    private static IProductService productService;
+    private static ITutoService productService;
     
     private static final Logger logger = LoggerFactory.getLogger("Test");
     
@@ -57,7 +57,7 @@ public class ProductServiceTest {
     /**
      * @return the productService
      */
-    public static IProductService getProductService() {
+    public static ITutoService getProductService() {
         return productService;
     }
 
@@ -74,7 +74,7 @@ public class ProductServiceTest {
             
         }
         
-       productService=(IProductService) context.getBean("ProductService");
+       productService=(ITutoService) context.getBean("TutoService");
     }
 
   
@@ -90,7 +90,7 @@ public class ProductServiceTest {
           List<Products> products = new ArrayList<Products>();
 
         logger.info("ProductSerivce not null: " + (null != getProductService()));
-        products=getProductService().find();
+        products=getProductService().getAll(Products.class);
         for(Products p : products)
         {
             logger.info("Prix "+ p.getPrice() );

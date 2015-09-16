@@ -1,25 +1,79 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Gestion des listes</title>
+
     </h:head>
     <h:body>
-        <p:dataTable var="product" value="#{productBean.products}">
-    <p:column headerText="N°Produit">
-        <h:outputText value="#{product.productNo}" />
-    </p:column>
- 
-    <p:column headerText="Nom">
-        <h:outputText value="#{product.name}" />
-    </p:column>
- 
-    <p:column headerText="Prix">
-        <h:outputText value="#{product.price}" />
-    </p:column>
- 
-</p:dataTable>
+        <f:view >
+
+            <p:layout style="width: 1000px;" fullPage="true">
+
+                <p:layoutUnit position="center" >
+
+
+<div class="ui-fluid">
+                    <h:form id="form" style="font-size: 11px; ">
+
+                        <p:dataTable var="product" value="#{productBean.products}" id="productList" style="width: 30%;" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                            <f:facet name="header">
+                                Liste des Produits 
+                                <p:commandButton id="multiViewButton" value="Nouveau" icon="ui-icon-circle-plus" onclick="PF('newProduct').show();"  title="Ajouter Produit" style="float: left; font-size: 13px;"/>
+                            </f:facet>
+
+                            <p:column headerText="Nom" style="width:10%"  sortBy="#{product.name}">
+                                <h:outputText value="#{product.name}" />
+                            </p:column>
+
+                            <p:column headerText="Libelle" style="width:10%"  sortBy="#{product.productNo}">
+                                <h:outputText value="#{product.productNo}" />
+                            </p:column>
+
+                            <p:column style="width:3%">
+                                <p:commandButton icon="ui-icon-pencil" actionListener="#{productBean.onSelectProduct(products)}" />
+                            </p:column>
+
+                            <p:column style="width:3%">
+                                <f:facet name="header">
+                                    <h:outputText value="" />
+                                </f:facet>
+                                <p:commandButton icon="ui-icon-trash" style="width: 30px; height: 30px;"
+                                                 actionListener="#{productBean.onSelectProduct(products)}" />
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+
+</div>
+                </p:layoutUnit>
+                <p:layoutUnit position="south"></p:layoutUnit>
+
+            </p:layout>
+
+            <p:dialog header="Ajouter un produit" widgetVar="newProduct" minHeight="40">
+   <h:panelGrid columns="2" id="display">
+
+                        <h:outputLabel style="font-size: 14px; font-weight: bold" for="nom" value="Nom: *" />
+                        <p:inputText id="nom" value="#{productBean.name}" required="true" label="Nom" style="width: 205px" requiredMessage="Nom: Champ obligatoire." />
+
+
+                        <h:outputLabel style="font-size: 14px; font-weight: bold" for="libelle" value="Libelle: *" />
+                        <p:inputText id="libelle" value="#{productBean.productNo}" required="true" label="Libelle" style="width: 205px" requiredMessage="Libelle: Champ obligatoire." />
+
+                    </h:panelGrid>
+                <p:separator/>
+                    <p:commandButton styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" id="enregsitrer" value="Enregistrer" actionListener="#{productBean.addProduct()}" ajax="true" style="width: 230px;" />
+                    <p:commandButton styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" value="Annuler" ajax="true" onclick="PF('newProduct').hide()"/>
+
+</p:dialog>
+            
+    </f:view>
     </h:body>
 </html>

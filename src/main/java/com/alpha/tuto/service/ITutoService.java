@@ -12,13 +12,11 @@ import java.util.List;
  *
  * @author bilel
  */
-public interface IOrderService {
+public interface ITutoService {
     
-    public List<Orders> find();
-    
-    public void addOrder(Orders order);
-    
-    public void updateOrder(Orders order);
-    
-    public void deleteOrder(Orders order);
+   public <T> T save(final T o);
+    public void delete(final Object object);
+    public <T> T get(final Class<T> type, final Long id);
+    public <T> void update(final T o);
+    public <T> List<T> getAll(final Class<T> type);
 }
